@@ -1,8 +1,76 @@
 import { redirect } from "next/navigation";
 import { getSessionEmail } from "@/lib/auth";
-import { getProductsForEmail } from "@/lib/data";
+import { getProductsForEmail, type ProductWithAccess } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
+
+function Cover({ p }: { p: ProductWithAccess }) {
+  if (p.cover_url) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={p.cover_url} alt={p.title} />;
+  }
+  return <span>{p.unlocked ? "▶" : "🔒"}</span>;
+}
+
+function Actions({ p }: { p: ProductWithAccess }) {
+  if (p.unlocked) {
+    return (
+      <>
+        <span className="status open">● Liberado</span>
+        {p.content_url ? (
+          <a className="cta" href={p.content_url} target="_blank" rel="noreferrer">
+            Acessar conteúdo →
+          </a>
+        ) : (
+          <span className="cta disabled">Conteúdo em breve</span>
+        )}
+      </>
+    );
+  }
+  return (
+    <>
+      <span className="status shut">🔒 Bloqueado</span>
+      {p.checkout_url ? (
+        <a className="cta" href={p.checkout_url} target="_blank" rel="noreferrer">
+          Comprar para liberar →
+        </a>
+      ) : (
+        <span className="cta disabled">Incluso na compra principal</span>
+      )}
+    </>
+  );
+}
+
+function ProductCard({ p }: { p: ProductWithAccess }) {
+  return (
+    <article className={`card ${p.unlocked ? "unlocked" : "locked"}`}>
+      <div className="cover">
+        <Cover p={p} />
+      </div>
+      <div className="card-body">
+        <h3>{p.title}</h3>
+        <p>{p.description}</p>
+        <Actions p={p} />
+      </div>
+    </article>
+  );
+}
+
+function FeaturedCard({ p }: { p: ProductWithAccess }) {
+  return (
+    <article className={`featured card ${p.unlocked ? "unlocked" : "locked"}`}>
+      <span className="badge main">Principal</span>
+      <div className="cover">
+        <Cover p={p} />
+      </div>
+      <div className="card-body">
+        <h3>{p.title}</h3>
+        <p>{p.description}</p>
+        <Actions p={p} />
+      </div>
+    </article>
+  );
+}
 
 export default async function MembrosPage() {
   const email = await getSessionEmail();
@@ -10,6 +78,10 @@ export default async function MembrosPage() {
 
   const products = await getProductsForEmail(email);
   const liberados = products.filter((p) => p.unlocked).length;
+
+  const main = products.find((p) => p.is_main);
+  const bonuses = products.filter((p) => p.is_bonus);
+  const bumps = products.filter((p) => !p.is_main && !p.is_bonus);
 
   return (
     <main className="container">
@@ -24,66 +96,38 @@ export default async function MembrosPage() {
 
       <h1 className="h-title">Seus produtos</h1>
       <p className="h-sub">
-        {liberados} de {products.length} liberados. Comprou mais? Atualize a
+        <b>{liberados}</b> de {products.length} liberados. Comprou mais? Atualize a
         página que o novo produto aparece aqui.
       </p>
 
-      <div className="grid">
-        {products.map((p) => (
-          <article
-            key={p.id}
-            className={`card ${p.unlocked ? "unlocked" : "locked"}`}
-          >
-            {p.is_main && <span className="badge main">Principal</span>}
-            <div className="cover">
-              {p.cover_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={p.cover_url} alt={p.title} />
-              ) : (
-                <span>{p.unlocked ? "▶" : "🔒"}</span>
-              )}
-            </div>
-            <div className="card-body">
-              <h3>{p.title}</h3>
-              <p>{p.description}</p>
+      {main && (
+        <section className="section">
+          <h2 className="section-title">Produto principal</h2>
+          <FeaturedCard p={main} />
+        </section>
+      )}
 
-              {p.unlocked ? (
-                <>
-                  <span className="status open">● Liberado</span>
-                  {p.content_url ? (
-                    <a
-                      className="cta"
-                      href={p.content_url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Acessar conteúdo →
-                    </a>
-                  ) : (
-                    <span className="cta disabled">Conteúdo em breve</span>
-                  )}
-                </>
-              ) : (
-                <>
-                  <span className="status shut">🔒 Bloqueado</span>
-                  {p.checkout_url ? (
-                    <a
-                      className="cta"
-                      href={p.checkout_url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Comprar para liberar →
-                    </a>
-                  ) : (
-                    <span className="cta disabled">Incluso na compra principal</span>
-                  )}
-                </>
-              )}
-            </div>
-          </article>
-        ))}
-      </div>
+      {bonuses.length > 0 && (
+        <section className="section">
+          <h2 className="section-title">Bônus inclusos</h2>
+          <div className="grid">
+            {bonuses.map((p) => (
+              <ProductCard key={p.id} p={p} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {bumps.length > 0 && (
+        <section className="section">
+          <h2 className="section-title">Mais produtos pra você</h2>
+          <div className="grid">
+            {bumps.map((p) => (
+              <ProductCard key={p.id} p={p} />
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }
