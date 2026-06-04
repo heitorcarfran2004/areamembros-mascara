@@ -1,7 +1,10 @@
 // Service worker mínimo — necessário para o app ser "instalável" (PWA).
-const CACHE = "espaco-criativo-v1";
+// IMPORTANTE: não interceptamos as requisições (sem event.respondWith).
+// O handler de fetch existe só para satisfazer o critério de instalabilidade;
+// deixar o navegador lidar com o carregamento evita quebrar a página em redes
+// instáveis (que foi o erro de carregamento no 1º acesso pelo celular).
 
-self.addEventListener("install", (event) => {
+self.addEventListener("install", () => {
   self.skipWaiting();
 });
 
@@ -9,11 +12,6 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(self.clients.claim());
 });
 
-// Handler de fetch (mesmo simples) é exigido por alguns navegadores para
-// considerar o app instalável. Usa rede e cai pro cache só se a rede falhar.
-self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
-  event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
-  );
-});
+// Handler de fetch vazio: NÃO chama respondWith, então cada requisição segue
+// o fluxo normal do navegador (rede), sem risco de falha por cache vazio.
+self.addEventListener("fetch", () => {});
