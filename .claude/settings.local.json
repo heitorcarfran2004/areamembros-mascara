@@ -74,7 +74,8 @@
       "Bash(git commit -q -m 'design: capa grayscale nos bloqueados + espacamento uniforme dos cards \\(titulo reserva 2 linhas, gap consistente\\) *)",
       "Bash(git commit -q -m 'feat: botao '\\\\''Instalar App'\\\\'' \\(visual\\) acima da logo no login *)",
       "Bash(git commit -q -m 'feat: PWA instalavel — manifest, service worker, icones 192/512, botao Instalar App \\(Android nativo / popup iOS\\) *)",
-      "Bash(git commit -q -m 'design: bonus em lista horizontal compacta \\(imagem esq, nome/status/botao dir\\) — destaca order bumps *)"
+      "Bash(git commit -q -m 'design: bonus em lista horizontal compacta \\(imagem esq, nome/status/botao dir\\) — destaca order bumps *)",
+      "Bash(git commit -q -m 'design: bonus com thumbnail 4:3 maior \\(+20%\\) e mais espacamento imagem->texto *)"
     ]
   }
 }

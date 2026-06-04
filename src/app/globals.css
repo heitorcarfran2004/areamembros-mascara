@@ -293,33 +293,37 @@ a { color: inherit; text-decoration: none; }
   gap: 12px;
 }
 .bonus-row {
-  display: grid;
-  grid-template-columns: 116px 1fr;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
+  border-radius: 16px;
   box-shadow: var(--shadow-sm);
 }
 .bonus-row.locked { opacity: .85; }
 .bonus-cover {
-  position: relative;
+  flex: 0 0 auto;
+  width: 140px;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
   overflow: hidden;
   background: linear-gradient(135deg, var(--brand-soft), #fde7d6);
   display: grid;
   place-items: center;
   color: var(--brand);
-  font-size: 22px;
+  font-size: 24px;
 }
 .bonus-cover img { width: 100%; height: 100%; object-fit: cover; }
 .bonus-row.locked .bonus-cover img { filter: grayscale(100%); }
 .bonus-body {
-  padding: 12px 14px;
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
   justify-content: center;
-  min-width: 0;
 }
 .bonus-body h3 {
   margin: 0;
