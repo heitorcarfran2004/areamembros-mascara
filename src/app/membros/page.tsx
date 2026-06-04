@@ -17,26 +17,26 @@ function Actions({ p }: { p: ProductWithAccess }) {
     return (
       <>
         <span className="status open">● Liberado</span>
-        {p.content_url ? (
-          <a className="cta" href={p.content_url} target="_blank" rel="noreferrer">
-            Acessar conteúdo →
-          </a>
-        ) : (
-          <span className="cta disabled">Conteúdo em breve</span>
-        )}
+        <a
+          className="cta"
+          href={p.content_url || "#"}
+          {...(p.content_url ? { target: "_blank", rel: "noreferrer" } : {})}
+        >
+          ACESSAR
+        </a>
       </>
     );
   }
   return (
     <>
-      <span className="status shut">🔒 Bloqueado</span>
-      {p.checkout_url ? (
-        <a className="cta" href={p.checkout_url} target="_blank" rel="noreferrer">
-          Comprar para liberar →
-        </a>
-      ) : (
-        <span className="cta disabled">Incluso na compra principal</span>
-      )}
+      <span className="status shut">🔒 Compre para liberar</span>
+      <a
+        className="cta"
+        href={p.checkout_url || "#"}
+        {...(p.checkout_url ? { target: "_blank", rel: "noreferrer" } : {})}
+      >
+        DESBLOQUEAR
+      </a>
     </>
   );
 }
@@ -84,7 +84,8 @@ export default async function MembrosPage() {
   return (
     <main className="container">
       <div className="topbar">
-        <span className="who">{email}</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="brand-logo" src="/logo.png" alt="Espaço Criativo" />
         <form action="/api/logout" method="post">
           <button className="btn-ghost" type="submit">
             Sair

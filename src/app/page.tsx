@@ -24,6 +24,8 @@ export default async function LoginPage({
   return (
     <main className="login-wrap">
       <div className="login-card">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="login-logo" src="/logo.png" alt="Espaço Criativo" />
         <h1>Acesse sua área de membros</h1>
         <p className="sub">
           Digite o email que você usou na compra para liberar seus produtos.
