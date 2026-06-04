@@ -69,7 +69,8 @@
       "Bash(node -e *)",
       "Bash(git commit -q -m 'design: gradiente laranja no fundo da tela de login *)",
       "Bash(git commit -q -m 'design: botao DESBLOQUEAR com preenchimento preto *)",
-      "Bash(git commit -q -m 'design: DESBLOQUEAR preto puro, cadeado em icone SVG vermelho e '\\\\''Compre para liberar'\\\\'' em vermelho *)"
+      "Bash(git commit -q -m 'design: DESBLOQUEAR preto puro, cadeado em icone SVG vermelho e '\\\\''Compre para liberar'\\\\'' em vermelho *)",
+      "Bash(git commit -q -m 'design: capas reais dos 10 produtos em formato 4:3 *)"
     ]
   }
 }
