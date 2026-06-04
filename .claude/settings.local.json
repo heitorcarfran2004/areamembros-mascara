@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import pypdf; r=pypdf.PdfReader\\('screencapture-husky-app-2026-06-03-23_10_39.pdf'\\); print\\(len\\(r.pages\\)\\); [print\\('=== PAGE',i,'===\\\\n', r.pages[i].extract_text\\(\\)[:1500]\\) for i in range\\(0,8\\)]\")",
+      "Bash(where.exe pdftotext *)",
+      "Bash(py --version)",
+      "Bash(pdftotext -layout \"screencapture-husky-app-2026-06-03-23_10_39.pdf\" husky.txt)",
+      "Bash(sed -n '1,250p' husky.txt)",
+      "Bash(python -m pip --version)",
+      "Bash(ls \"C:\\\\Program Files\\\\Git\\\\mingw64\\\\bin\\\\\" | grep -i pdf)",
+      "PowerShell(winget install --id oschwartz10612.Poppler --accept-source-agreements --accept-package-agreements -e 2>&1)",
+      "PowerShell($p = Get-ChildItem \"$env:LOCALAPPDATA\\\\Microsoft\\\\WinGet\\\\Packages\" -Recurse -Filter \"pdftoppm.exe\" -ErrorAction SilentlyContinue | Select-Object -First 1; if\\($p\\){ Write-Output $p.FullName } else { Write-Output \"NOT FOUND\" })",
+      "PowerShell($bin = \"C:\\\\Users\\\\thorz\\\\AppData\\\\Local\\\\Microsoft\\\\WinGet\\\\Packages\\\\oschwartz10612.Poppler_Microsoft.Winget.Source_8wekyb3d8bbwe\\\\poppler-25.07.0\\\\Library\\\\bin\"; & \"$bin\\\\pdfinfo.exe\" \"C:\\\\Users\\\\thorz\\\\Downloads\\\\screencapture-husky-app-2026-06-03-23_10_39.pdf\" 2>&1 | Select-String \"Pages|Page size\")",
+      "Bash(npm --version)",
+      "WebSearch",
+      "WebFetch(domain:docs.vegacheckout.com.br)",
+      "Bash(npm install *)",
+      "Bash(npm ls *)",
+      "Bash(npm run *)",
+      "WebFetch(domain:www.ggcheckout.com)",
+      "Bash(git --version)",
+      "Bash(git config *)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
