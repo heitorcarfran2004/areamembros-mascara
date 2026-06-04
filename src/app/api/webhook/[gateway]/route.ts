@@ -50,11 +50,7 @@ export async function POST(
       headerBlob.includes(secret) ||
       rawText.includes(secret));
 
-  if (!authorized) {
-    return NextResponse.json({ error: "não autorizado" }, { status: 401 });
-  }
-
-  // 3) Extrai dados do payload (tolerante a formato)
+  // 4) Extrai dados do payload (tolerante a formato)
   const email = extractEmail(payload);
   const { isPaid, status } = extractIsPaid(payload);
   const refs = extractProductRefs(payload);
@@ -65,8 +61,8 @@ export async function POST(
   let ok = true;
 
   try {
-    // 4) Só libera se estiver paga e tiver email
-    if (isPaid && email) {
+    // 5) Só LIBERA se: autorizado + pago + tem email
+    if (authorized && isPaid && email) {
       const resolved = await resolveProductRefs(gateway, refs);
       matchedProductIds = resolved.productIds;
       unmatched = resolved.unmatched;
@@ -77,23 +73,31 @@ export async function POST(
     console.error("[webhook] erro ao processar", e);
   }
 
-  // 5) Sempre registra o evento cru (pra você ver os IDs reais e calibrar o mapa)
+  // 6) Registra SEMPRE o evento cru (mesmo não-autorizado) pra calibração/debug.
+  //    Marca no status quando o segredo não bateu.
   try {
     await logWebhookEvent({
       gateway,
       email,
-      status,
+      status: authorized ? status : `[NAO AUTORIZADO] ${status ?? ""}`.trim(),
       isPaid,
       matchedProductIds,
       unmatchedExternalIds: unmatched,
       raw: payload,
-      ok,
+      ok: authorized && ok,
     });
   } catch (e) {
     console.error("[webhook] erro ao logar evento", e);
   }
 
-  // 6) Responde 200 pro gateway (sempre, pra ele não ficar reenviando)
+  // 7) Resposta
+  if (!authorized) {
+    // 401 mas já registramos pra debug; o gateway pode reenviar (e veremos no log)
+    return NextResponse.json(
+      { error: "não autorizado", logged: true },
+      { status: 401 }
+    );
+  }
   return NextResponse.json({
     received: true,
     gateway,
