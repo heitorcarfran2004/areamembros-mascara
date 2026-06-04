@@ -31,7 +31,7 @@ function Actions({ p }: { p: ProductWithAccess }) {
     <>
       <span className="status shut">🔒 Compre para liberar</span>
       <a
-        className="cta"
+        className="cta cta-dark"
         href={p.checkout_url || "#"}
         {...(p.checkout_url ? { target: "_blank", rel: "noreferrer" } : {})}
       >

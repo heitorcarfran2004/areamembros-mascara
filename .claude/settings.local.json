@@ -67,7 +67,8 @@
       "Bash(git commit -q -m 'design: logo Espaco Criativo \\(login + topbar\\), botoes ACESSAR/DESBLOQUEAR, subtitulo '\\\\''Compre para liberar'\\\\'' *)",
       "mcp__Claude_in_Chrome__resize_window",
       "Bash(node -e *)",
-      "Bash(git commit -q -m 'design: gradiente laranja no fundo da tela de login *)"
+      "Bash(git commit -q -m 'design: gradiente laranja no fundo da tela de login *)",
+      "Bash(git commit -q -m 'design: botao DESBLOQUEAR com preenchimento preto *)"
     ]
   }
 }

@@ -257,6 +257,9 @@ a { color: inherit; text-decoration: none; }
   transition: background .12s;
 }
 .cta:hover { background: var(--brand-strong); }
+/* botão DESBLOQUEAR (bloqueado) preenchido em preto */
+.cta.cta-dark { background: #17171f; }
+.cta.cta-dark:hover { background: #000; }
 .cta.disabled {
   background: var(--surface-2);
   color: var(--muted);
