@@ -134,7 +134,13 @@ export async function getProductsForEmail(email: string): Promise<ProductWithAcc
   if (eErr) throw eErr;
 
   const unlocked = new Set((ents ?? []).map((e) => e.product_id));
-  return (products ?? []).map((p) => ({ ...p, unlocked: unlocked.has(p.id) }));
+  // Principal e BÔNUS são SEMPRE liberados para qualquer membro: só de existir
+  // (ou seja, ter comprado o front e sido registrado) a pessoa já tem acesso.
+  // Não dependem de webhook/ID. Os order bumps continuam dependendo da compra.
+  return (products ?? []).map((p) => ({
+    ...p,
+    unlocked: p.is_main || p.is_bonus || unlocked.has(p.id),
+  }));
 }
 
 // Atualiza o último login (carimbo informativo).

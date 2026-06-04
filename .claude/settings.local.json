@@ -78,7 +78,8 @@
       "Bash(git commit -q -m 'design: bonus com thumbnail 4:3 maior \\(+20%\\) e mais espacamento imagem->texto *)",
       "mcp__5d067a19-7196-4d5f-87fd-2ecc641d3cac__get_runtime_logs",
       "Bash(git commit -q -m 'fix: service worker sem interceptar fetch \\(corrige erro de carregamento no 1o acesso mobile\\) *)",
-      "Bash(git commit -q -m 'webhook: registra todo evento recebido \\(mesmo nao autorizado\\) para calibracao/debug *)"
+      "Bash(git commit -q -m 'webhook: registra todo evento recebido \\(mesmo nao autorizado\\) para calibracao/debug *)",
+      "Bash(git commit -q -m 'feat: principal e bonus sempre liberados para qualquer membro \\(sem depender de ID/webhook\\) *)"
     ]
   }
 }
