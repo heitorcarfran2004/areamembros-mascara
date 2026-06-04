@@ -1,0 +1,16 @@
+{
+  "name": "Espaço Criativo",
+  "short_name": "Espaço Criativo",
+  "description": "Sua área de membros do Espaço Criativo",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "background_color": "#EA580C",
+  "theme_color": "#EA580C",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
