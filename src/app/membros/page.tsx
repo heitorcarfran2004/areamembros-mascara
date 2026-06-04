@@ -4,12 +4,36 @@ import { getProductsForEmail, type ProductWithAccess } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
+function LockIcon({ size = 14 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3.5" y="10.5" width="17" height="11" rx="2.2" />
+      <path d="M7.5 10.5V7a4.5 4.5 0 0 1 9 0v3.5" />
+    </svg>
+  );
+}
+
 function Cover({ p }: { p: ProductWithAccess }) {
   if (p.cover_url) {
     // eslint-disable-next-line @next/next/no-img-element
     return <img src={p.cover_url} alt={p.title} />;
   }
-  return <span>{p.unlocked ? "▶" : "🔒"}</span>;
+  if (p.unlocked) return <span>▶</span>;
+  return (
+    <span className="cover-lock">
+      <LockIcon size={34} />
+    </span>
+  );
 }
 
 function Actions({ p }: { p: ProductWithAccess }) {
@@ -29,7 +53,9 @@ function Actions({ p }: { p: ProductWithAccess }) {
   }
   return (
     <>
-      <span className="status shut">🔒 Compre para liberar</span>
+      <span className="status shut">
+        <LockIcon size={13} /> Compre para liberar
+      </span>
       <a
         className="cta cta-dark"
         href={p.checkout_url || "#"}
