@@ -49,7 +49,6 @@ function ProductCard({ p }: { p: ProductWithAccess }) {
       </div>
       <div className="card-body">
         <h3>{p.title}</h3>
-        <p>{p.description}</p>
         <Actions p={p} />
       </div>
     </article>
@@ -65,7 +64,6 @@ function FeaturedCard({ p }: { p: ProductWithAccess }) {
       </div>
       <div className="card-body">
         <h3>{p.title}</h3>
-        <p>{p.description}</p>
         <Actions p={p} />
       </div>
     </article>
