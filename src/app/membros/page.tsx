@@ -96,6 +96,20 @@ function FeaturedCard({ p }: { p: ProductWithAccess }) {
   );
 }
 
+function BonusRow({ p }: { p: ProductWithAccess }) {
+  return (
+    <article className={`bonus-row ${p.unlocked ? "unlocked" : "locked"}`}>
+      <div className="bonus-cover">
+        <Cover p={p} />
+      </div>
+      <div className="bonus-body">
+        <h3>{p.title}</h3>
+        <Actions p={p} />
+      </div>
+    </article>
+  );
+}
+
 export default async function MembrosPage() {
   const email = await getSessionEmail();
   if (!email) redirect("/");
@@ -135,9 +149,9 @@ export default async function MembrosPage() {
       {bonuses.length > 0 && (
         <section className="section">
           <h2 className="section-title">Bônus inclusos</h2>
-          <div className="grid">
+          <div className="bonus-list">
             {bonuses.map((p) => (
-              <ProductCard key={p.id} p={p} />
+              <BonusRow key={p.id} p={p} />
             ))}
           </div>
         </section>
